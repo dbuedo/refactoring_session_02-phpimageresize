@@ -30,6 +30,8 @@ class ImagePath {
     private function obtainScheme() {
         if ($this->path == '') return '';
         $purl = parse_url($this->path);
-        return $purl['scheme'];
+        if(isset($purl['scheme'])) return $purl['scheme'];
+        return '';
     }
+
 }

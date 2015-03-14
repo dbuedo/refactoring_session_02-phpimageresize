@@ -36,4 +36,5 @@ class ImagePathTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('mf.jpg', $imagePath->obtainFileName());
     }
 
+
 }

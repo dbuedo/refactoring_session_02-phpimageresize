@@ -29,6 +29,8 @@ function composeNewPath($imagePath, $configuration) {
 	$finfo = pathinfo($imagePath);
 	$ext = $finfo['extension'];
 
+    $opts = $configuration->asHash();
+
 	$cropSignal = isset($opts['crop']) && $opts['crop'] == true ? "_cp" : "";
 	$scaleSignal = isset($opts['scale']) && $opts['scale'] == true ? "_sc" : "";
 	$widthSignal = !empty($w) ? '_w'.$w : '';
@@ -128,32 +130,28 @@ function doResize($imagePath, $newPath, $configuration) {
 }
 
 function resize($imagePath,$opts=null){
-
-
 	$path = new ImagePath($imagePath);
 	$configuration = new Configuration($opts);
-
 	$resizer = new Resizer($path, $configuration);
 
 	// This has to go to Configuration as Exception in initialization
+    $w = $configuration->obtainWidth();
+    $h = $configuration->obtainHeight();
 
-	if(empty($configuration->asHash()['output-filename']) && empty($w) && empty($h)) {
+    if(empty($configuration->asHash()['output-filename']) && empty($w) && empty($h)) {
 		return 'cannot resize the image';
 	}
 
 	// This has to be done in resizer resize
-
 	try {
 		$imagePath = $resizer->obtainFilePath();
 	} catch (Exception $e) {
 		return 'image not found';
 	}
 
-
 	$newPath = composeNewPath($imagePath, $configuration);
 
     $create = !isInCache($newPath, $imagePath);
-
 	if($create == true):
 		try {
 			doResize($imagePath, $newPath, $configuration);
@@ -163,7 +161,6 @@ function resize($imagePath,$opts=null){
 	endif;
 
 	// The new path must be the return value of resizer resize
-
 	$cacheFilePath = str_replace($_SERVER['DOCUMENT_ROOT'],'',$newPath);
 
 	return $cacheFilePath;
