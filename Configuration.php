@@ -4,8 +4,15 @@ class Configuration {
     const CACHE_PATH = './cache/';
     const REMOTE_PATH = './cache/remote/';
 
+    const CROP_KEY = 'crop';
+    const SCALE_KEY = 'scale';
+    const THUMBNAIL_KEY = 'thumbnail';
+    const MAX_ONLY_KEY = 'maxOnly';
+    const CANVAS_COLOR_KEY = 'canvas-color';
+    const OUTPUT_FILE_NAME_KEY = 'output-filename';
     const CACHE_KEY = 'cacheFolder';
     const REMOTE_KEY = 'remoteFolder';
+    const QUALITY_KEY = 'quality';
     const CACHE_MINUTES_KEY = 'cache_http_minutes';
     const WIDTH_KEY = 'w';// 'width';
     const HEIGHT_KEY = 'h';//'height';
@@ -17,23 +24,23 @@ class Configuration {
     public function __construct($opts=array()) {
         $sanitized= $this->sanitize($opts);
 
-        if(empty($opts['output-filename'])
+        if(empty($opts[self::OUTPUT_FILE_NAME_KEY])
             && empty($opts[self::WIDTH_KEY])
             && empty($opts[self::HEIGHT_KEY])) {
             throw new InvalidArgumentException();
 	    }
 
         $defaults = array(
-            'crop' => false,
-            'scale' => 'false',
-            'thumbnail' => false,
-            'maxOnly' => false,
-            'canvas-color' => 'transparent',
-            'output-filename' => false,
+            self::CROP_KEY => false,
+            self::SCALE_KEY => 'false',
+            self::THUMBNAIL_KEY => false,
+            self::MAX_ONLY_KEY => false,
+            self::CANVAS_COLOR_KEY => 'transparent',
+            self::OUTPUT_FILE_NAME_KEY => false,
             self::CACHE_KEY => self::CACHE_PATH,
             self::REMOTE_KEY => self::REMOTE_PATH,
-            'quality' => 90,
-            'cache_http_minutes' => 20,
+            self::QUALITY_KEY => 90,
+            self::CACHE_MINUTES_KEY => 20,
             self::WIDTH_KEY => null,
             self::HEIGHT_KEY => null);
 

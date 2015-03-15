@@ -43,6 +43,13 @@ class FunctionResizeTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('cannot resize the image', $finalImage);
     }
 
+    public function testImageNotFound() {
+        $settings = array('w'=>300);
+        $finalImage = resize('images/not-found.jpg',$settings);
+
+        $this->assertEquals('image not found', $finalImage);
+    }
+
 
 }
 

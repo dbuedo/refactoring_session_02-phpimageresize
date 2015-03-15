@@ -1,6 +1,6 @@
 <?php
 
-require 'ImagePath.php';
+require 'Image.php';
 require 'Configuration.php';
 require 'Resizer.php';
 
@@ -107,25 +107,23 @@ function doResize($imagePath, $newPath, $configuration) {
 }
 
 function resize($imagePath,$opts=null){
-	$path = new ImagePath($imagePath);
-
     try {
         $configuration = new Configuration($opts);
     } catch(InvalidArgumentException $e) {
         return 'cannot resize the image';
     }
+    $originalImage = new Image($imagePath, $configuration->obtainRemote());
 
-	$resizer = new Resizer($path, $configuration);
+	$resizer = new Resizer($originalImage, $configuration);
 
 
 	// This has to be done in resizer resize
 	try {
 		$imagePath = $resizer->obtainFilePath();
+        $newPath = $resizer->composeNewPath();
 	} catch (Exception $e) {
 		return 'image not found';
 	}
-
-	$newPath = $resizer->composeNewPath();
 
     $create = !isInCache($newPath, $imagePath);
 	if($create == true):

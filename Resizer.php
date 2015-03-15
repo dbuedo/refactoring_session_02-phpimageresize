@@ -25,9 +25,9 @@ class Resizer {
         $imagePath = $this->path->sanitizedPath();
 
         if($this->path->isHttpProtocol()):
-            $filename = $this->path->obtainFileName();
-            $local_filepath = $this->configuration->obtainRemote() .$filename;
-            $inCache = $this->isInCache($local_filepath);
+            $local_filepath = $this->path->obtainLocalFilePath();
+
+            $inCache = $this->path->isCached($this->configuration->obtainCacheMinutes());
 
             if(!$inCache):
                 $this->download($local_filepath);
@@ -46,8 +46,8 @@ class Resizer {
     }
 
     public function composeNewPath() {
-        $w = $this->configuration->obtainWidth();
-        $h = $this->configuration->obtainHeight();
+        $width = $this->configuration->obtainWidth();
+        $height = $this->configuration->obtainHeight();
         $imagePath = $this->obtainFilePath();
 
         $filename = md5_file($imagePath);
@@ -58,8 +58,8 @@ class Resizer {
 
         $cropSignal = isset($opts['crop']) && $opts['crop'] == true ? "_cp" : "";
         $scaleSignal = isset($opts['scale']) && $opts['scale'] == true ? "_sc" : "";
-        $widthSignal = !empty($w) ? '_w'.$w : '';
-        $heightSignal = !empty($h) ? '_h'.$h : '';
+        $widthSignal = !empty($width) ? '_w'.$width : '';
+        $heightSignal = !empty($height) ? '_h'.$height : '';
         $extension = '.'.$ext;
 
         $newPath = $this->configuration->obtainCache() .$filename.$widthSignal.$heightSignal.$cropSignal.$scaleSignal.$extension;
@@ -69,29 +69,15 @@ class Resizer {
         }
 
         return $newPath;
-      //  return './cache/a_w100_h100_sc.jpg';
     }
-
 
     private function download($filePath) {
         $img = $this->fileSystem->file_get_contents($this->path->sanitizedPath());
         $this->fileSystem->file_put_contents($filePath,$img);
     }
 
-    private function isInCache($filePath) {
-        $fileExists = $this->fileSystem->file_exists($filePath);
-        $fileValid = $this->fileNotExpired($filePath);
-
-        return $fileExists && $fileValid;
-    }
-
-    private function fileNotExpired($filePath) {
-        $cacheMinutes = $this->configuration->obtainCacheMinutes();
-        $this->fileSystem->filemtime($filePath) < strtotime('+'. $cacheMinutes. ' minutes');
-    }
-
     private function checkPath($path) {
-        if (!($path instanceof ImagePath)) throw new InvalidArgumentException();
+        if (!($path instanceof Image)) throw new InvalidArgumentException();
     }
 
     private function checkConfiguration($configuration) {
