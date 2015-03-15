@@ -131,16 +131,15 @@ function doResize($imagePath, $newPath, $configuration) {
 
 function resize($imagePath,$opts=null){
 	$path = new ImagePath($imagePath);
-	$configuration = new Configuration($opts);
+
+    try {
+        $configuration = new Configuration($opts);
+    } catch(InvalidArgumentException $e) {
+        return 'cannot resize the image';
+    }
+
 	$resizer = new Resizer($path, $configuration);
 
-	// This has to go to Configuration as Exception in initialization
-    $w = $configuration->obtainWidth();
-    $h = $configuration->obtainHeight();
-
-    if(empty($configuration->asHash()['output-filename']) && empty($w) && empty($h)) {
-		return 'cannot resize the image';
-	}
 
 	// This has to be done in resizer resize
 	try {

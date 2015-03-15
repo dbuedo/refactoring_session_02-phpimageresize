@@ -1,73 +1,44 @@
 <?php
-
-include 'Configuration.php';
+include 'function.resize.php';
 
 class FunctionResizeTest extends PHPUnit_Framework_TestCase {
 
-    private $defaults = array(
-        'crop' => false,
-        'scale' => 'false',
-        'thumbnail' => false,
-        'maxOnly' => false,
-        'canvas-color' => 'transparent',
-        'output-filename' => false,
-        'cacheFolder' => './cache/',
-        'remoteFolder' => './cache/remote/',
-        'quality' => 90,
-        'cache_http_minutes' => 20,
-        'w' => null,
-        'h' => null
-    );
+    public function testResizeWidthLocalImage() {
+        $settings = array('w'=>300);
+        $finalImage = resize('images/dog.jpg',$settings);
 
-    public function testOpts()
-    {
-        $this->assertInstanceOf('Configuration', new Configuration);
+        $this->assertStringMatchesFormat('./cache/%x_w300_sc.jpg',  $finalImage);
     }
 
-    public function testNullOptsDefaults() {
-        $configuration = new Configuration(null);
 
-        $this->assertEquals($this->defaults, $configuration->asHash());
+    public function testResizeWidthAndHeihgtLocalImage() {
+        $settings = array('w'=>300, 'h'=>300);
+        $finalImage = resize('images/dog.jpg',$settings);
+
+        $this->assertStringMatchesFormat('./cache/%x_w300_h300_sc.jpg',  $finalImage);
     }
 
-    public function testDefaults() {
-        $configuration = new Configuration();
-        $asHash = $configuration->asHash();
+    public function testResizeCropLocalImage() {
+        $settings = array('w'=>300, 'h'=>300, 'crop'=>1);
+        $finalImage = resize('images/dog.jpg',$settings);
 
-        $this->assertEquals($this->defaults, $asHash);
+        $this->assertStringMatchesFormat('./cache/%x_w300_h300_cp_sc.jpg',  $finalImage);
     }
 
-    public function testDefaultsNotOverwriteConfiguration() {
+    public function testResizeCropRemoteImage() {
+        $settings = array('w'=>100,'h'=>100,'crop'=>true);
+        $finalImage = resize('http://farm4.static.flickr.com/3210/2934973285_fa4761c982.jpg',$settings);
 
-        $opts = array(
-            'thumbnail' => true,
-            'maxOnly' => true
-        );
-
-        $configuration = new Configuration($opts);
-        $configured = $configuration->asHash();
-
-        $this->assertTrue($configured['thumbnail']);
-        $this->assertTrue($configured['maxOnly']);
+        $this->assertStringMatchesFormat('./cache/%x_w100_h100_cp_sc.jpg',  $finalImage);
     }
 
-    public function testObtainCache() {
-        $configuration = new Configuration();
+    public function testNoOptions() {
+        $settings = array();
+        $finalImage = resize('images/dog.jpg',$settings);
 
-        $this->assertEquals('./cache/', $configuration->obtainCache());
+        $this->assertEquals('cannot resize the image', $finalImage);
     }
 
-    public function testObtainRemote() {
-        $configuration = new Configuration();
 
-        $this->assertEquals('./cache/remote/', $configuration->obtainRemote());
-    }
-
-    public function testObtainConvertPath() {
-        $configuration = new Configuration();
-
-        $this->assertEquals('convert', $configuration->obtainConvertPath());
-    }
 }
 
-?>

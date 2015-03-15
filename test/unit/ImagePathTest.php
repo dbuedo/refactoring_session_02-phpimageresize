@@ -13,18 +13,19 @@ class ImagePathTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testIsHttpProtocol() {
-        $url = 'https://example.com';
-
-        $imagePath = new ImagePath($url);
-
+        $imagePath = new ImagePath('https://example.com');
         $this->assertTrue($imagePath->isHttpProtocol());
 
         $imagePath = new ImagePath('ftp://example.com');
-
         $this->assertFalse($imagePath->isHttpProtocol());
 
         $imagePath = new ImagePath(null);
+        $this->assertFalse($imagePath->isHttpProtocol());
 
+        $imagePath = new ImagePath('/absolute/local/path');
+        $this->assertFalse($imagePath->isHttpProtocol());
+
+        $imagePath = new ImagePath('relative/local/path');
         $this->assertFalse($imagePath->isHttpProtocol());
     }
 
