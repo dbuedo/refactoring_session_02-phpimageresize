@@ -8,6 +8,7 @@ class FunctionResizeTest extends PHPUnit_Framework_TestCase {
         $finalImage = resize('images/dog.jpg',$settings);
 
         $this->assertStringMatchesFormat('./cache/%x_w300_sc.jpg',  $finalImage);
+        $this->assertFileExists($finalImage);
     }
 
 
@@ -16,6 +17,7 @@ class FunctionResizeTest extends PHPUnit_Framework_TestCase {
         $finalImage = resize('images/dog.jpg',$settings);
 
         $this->assertStringMatchesFormat('./cache/%x_w300_h300_sc.jpg',  $finalImage);
+        $this->assertFileExists($finalImage);
     }
 
     public function testResizeCropLocalImage() {
@@ -23,6 +25,7 @@ class FunctionResizeTest extends PHPUnit_Framework_TestCase {
         $finalImage = resize('images/dog.jpg',$settings);
 
         $this->assertStringMatchesFormat('./cache/%x_w300_h300_cp_sc.jpg',  $finalImage);
+        $this->assertFileExists($finalImage);
     }
 
     public function testResizeCropRemoteImage() {
@@ -30,6 +33,7 @@ class FunctionResizeTest extends PHPUnit_Framework_TestCase {
         $finalImage = resize('http://farm4.static.flickr.com/3210/2934973285_fa4761c982.jpg',$settings);
 
         $this->assertStringMatchesFormat('./cache/%x_w100_h100_cp_sc.jpg',  $finalImage);
+        $this->assertFileExists($finalImage);
     }
 
     public function testNoOptions() {

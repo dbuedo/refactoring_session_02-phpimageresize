@@ -65,4 +65,14 @@ class ResizerTest extends PHPUnit_Framework_TestCase {
     }
 
 
+    public function testComposeNewPath() {
+        $configuration = new Configuration(array('w' => 100, 'h' => 100));
+        $imagePath = new ImagePath('images/dog.jpg');
+        $resizer = new Resizer($imagePath, $configuration);
+
+        $newPath = $resizer->composeNewPath();
+
+        $this->assertStringMatchesFormat('./cache/%x_w100_h100_sc.jpg',  $newPath);
+    }
+
 }

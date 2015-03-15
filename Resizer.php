@@ -45,6 +45,33 @@ class Resizer {
         return $imagePath;
     }
 
+    public function composeNewPath() {
+        $w = $this->configuration->obtainWidth();
+        $h = $this->configuration->obtainHeight();
+        $imagePath = $this->obtainFilePath();
+
+        $filename = md5_file($imagePath);
+        $finfo = pathinfo($imagePath);
+        $ext = $finfo['extension'];
+
+        $opts = $this->configuration->asHash();
+
+        $cropSignal = isset($opts['crop']) && $opts['crop'] == true ? "_cp" : "";
+        $scaleSignal = isset($opts['scale']) && $opts['scale'] == true ? "_sc" : "";
+        $widthSignal = !empty($w) ? '_w'.$w : '';
+        $heightSignal = !empty($h) ? '_h'.$h : '';
+        $extension = '.'.$ext;
+
+        $newPath = $this->configuration->obtainCache() .$filename.$widthSignal.$heightSignal.$cropSignal.$scaleSignal.$extension;
+
+        if($opts['output-filename']) {
+            $newPath = $opts['output-filename'];
+        }
+
+        return $newPath;
+      //  return './cache/a_w100_h100_sc.jpg';
+    }
+
 
     private function download($filePath) {
         $img = $this->fileSystem->file_get_contents($this->path->sanitizedPath());
