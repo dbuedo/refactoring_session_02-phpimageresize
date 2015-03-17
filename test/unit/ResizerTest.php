@@ -86,4 +86,19 @@ class ResizerTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('out.jpg',  $newPath);
     }
 
+    public function testResizeCropRemoteImage() {
+        $settings = array('w'=>100,'h'=>100,'crop'=>true);
+        $imagePath = 'http://farm4.static.flickr.com/3210/2934973285_fa4761c982.jpg';
+
+        $configuration = new Configuration($settings);
+        $image = new Image($imagePath, './cache/remote/');
+        $resizer = new Resizer($image, $configuration);
+
+        $downloadedImagePath = $resizer->obtainFilePath();
+        $finalImagePath = $resizer->composeNewPath();
+
+        $this->assertEquals('./cache/remote/2934973285_fa4761c982.jpg',  $downloadedImagePath);
+        $this->assertStringMatchesFormat('./cache/%x_w100_h100_cp_sc.jpg',  $finalImagePath);
+    }
+
 }

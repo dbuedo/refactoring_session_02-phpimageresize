@@ -38,9 +38,10 @@ class Image {
     public function isCached($minutesInCache) {
         $filePath = $this->obtainLocalFilePath();
         $fileExists = $this->fileSystem->file_exists($filePath);
-        $fileValid = $this->fileNotExpired($filePath, $minutesInCache);
-
-        return $fileExists && $fileValid;
+        if($fileExists) {
+            return $this->fileNotExpired($filePath, $minutesInCache);
+        }
+        return $fileExists;
     }
 
     private function fileNotExpired($filePath, $minutesInCache) {
