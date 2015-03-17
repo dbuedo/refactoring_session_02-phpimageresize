@@ -63,6 +63,45 @@ class ImageTest extends PHPUnit_Framework_TestCase {
 
     }
 
+    public function testIsPanoramic() {
+         $stub = $this->getMockBuilder('FileSystem')
+            ->getMock();
+        $stub->method('file_get_contents')
+            ->willReturn('foo');
+        $stub->method('file_exists')
+            ->willReturn(true);
+        $stub->method('filemtime')
+            ->willReturn(10 * 60);
+        $stub->method('getimagesize')
+            ->willReturn(array(800, 200));
+
+        $image = new Image('images/dog.jpg');
+        $image->injectFileSystem($stub);
+
+        $this->assertTrue($image->isPanoramic());
+
+    }
+
+    public function testIsNotPanoramic() {
+        $stub = $this->getMockBuilder('FileSystem')
+            ->getMock();
+        $stub->method('file_get_contents')
+            ->willReturn('foo');
+        $stub->method('file_exists')
+            ->willReturn(true);
+        $stub->method('filemtime')
+            ->willReturn(10 * 60);
+        $stub->method('getimagesize')
+            ->willReturn(array(200, 800));
+
+        $image = new Image('images/dog.jpg');
+        $image->injectFileSystem($stub);
+
+        $this->assertFalse($image->isPanoramic());
+
+    }
+
+
     public function testObtainLocallyCachedFilePath() {
         $configuration = new Configuration(array('w' => 800, 'h' => 600));
         $image = new Image('http://martinfowler.com/mf.jpg?query=hello&s=fowler', $configuration);

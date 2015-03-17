@@ -8,12 +8,12 @@ function sanitize($path) {
 	return urldecode($path);
 }
 
-function isInCache($path, $imagePath) {
+function isInCache($newPath, $originalPath) {
 	$isInCache = false;
-	if(file_exists($path) == true):
+	if(file_exists($newPath) == true):
 		$isInCache = true;
-		$origFileTime = date("YmdHis",filemtime($imagePath));
-		$newFileTime = date("YmdHis",filemtime($path));
+		$origFileTime = date("YmdHis",filemtime($originalPath));
+		$newFileTime = date("YmdHis",filemtime($newPath));
 		if($newFileTime < $origFileTime): # Not using $opts['expire-time'] ??
 			$isInCache = false;
 		endif;
@@ -23,11 +23,11 @@ function isInCache($path, $imagePath) {
 }
 
 
-function defaultShellCommand($configuration, $imagePath, $newPath) {
+function defaultShellCommand($image, $newPath, $configuration) {
 	$opts = $configuration->asHash();
 	$w = $configuration->obtainWidth();
 	$h = $configuration->obtainHeight();
-
+    $imagePath = $image->obtainFilePath();
 	$command = $configuration->obtainConvertPath() ." " . escapeshellarg($imagePath) .
 	" -thumbnail ". (!empty($h) ? 'x':'') . $w ."".
 	(isset($opts['maxOnly']) && $opts['maxOnly'] == true ? "\>" : "") .
@@ -36,33 +36,30 @@ function defaultShellCommand($configuration, $imagePath, $newPath) {
 	return $command;
 }
 
-function isPanoramic($imagePath) {
-	list($width,$height) = getimagesize($imagePath);
-	return $width > $height;
-}
-
-function composeResizeOptions($imagePath, $configuration) {
+function composeResizeOptions($image, $configuration) {
 	$opts = $configuration->asHash();
 	$w = $configuration->obtainWidth();
 	$h = $configuration->obtainHeight();
-
+    $imagePath = $image->obtainFilePath();
 	$resize = "x".$h;
 
 	$hasCrop = (true === $opts['crop']);
 
-	if(!$hasCrop && isPanoramic($imagePath)):
-		$resize = $w;
-	endif;
+    if(!$hasCrop && $image->isPanoramic()):
+        $resize = $w;
+    endif;
 
-	if($hasCrop && !isPanoramic($imagePath)):
-		$resize = $w;
-	endif;
+    if($hasCrop && !$image->isPanoramic()):
+        $resize = $w;
+    endif;
 
-	return $resize;
+
+    return $resize;
 }
 
-function commandWithScale($imagePath, $newPath, $configuration) {
+function commandWithScale($image, $newPath, $configuration) {
 	$opts = $configuration->asHash();
+    $imagePath = $image->obtainFilePath();
 	$resize = composeResizeOptions($imagePath, $configuration);
 
 	$cmd = $configuration->obtainConvertPath() ." ". escapeshellarg($imagePath) ." -resize ". escapeshellarg($resize) .
@@ -71,10 +68,11 @@ function commandWithScale($imagePath, $newPath, $configuration) {
 	return $cmd;
 }
 
-function commandWithCrop($imagePath, $newPath, $configuration) {
+function commandWithCrop($image, $newPath, $configuration) {
 	$opts = $configuration->asHash();
 	$w = $configuration->obtainWidth();
 	$h = $configuration->obtainHeight();
+    $imagePath = $image->obtainFilePath();
 	$resize = composeResizeOptions($imagePath, $configuration);
 
 	$cmd = $configuration->obtainConvertPath() ." ". escapeshellarg($imagePath) ." -resize ". escapeshellarg($resize) .
@@ -85,18 +83,18 @@ function commandWithCrop($imagePath, $newPath, $configuration) {
 	return $cmd;
 }
 
-function doResize($imagePath, $newPath, $configuration) {
+function doResize($originalImage, $newPath, $configuration) {
 	$opts = $configuration->asHash();
 	$w = $configuration->obtainWidth();
 	$h = $configuration->obtainHeight();
 
 	if(!empty($w) and !empty($h)):
-		$cmd = commandWithCrop($imagePath, $newPath, $configuration);
+		$cmd = commandWithCrop($originalImage, $newPath, $configuration);
 		if(true === $opts['scale']):
-			$cmd = commandWithScale($imagePath, $newPath, $configuration);
+			$cmd = commandWithScale($originalImage, $newPath, $configuration);
 		endif;
 	else:
-		$cmd = defaultShellCommand($configuration, $imagePath, $newPath);
+		$cmd = defaultShellCommand($originalImage, $newPath, $configuration);
 	endif;
 
 	$c = exec($cmd, $output, $return_code);
@@ -106,29 +104,29 @@ function doResize($imagePath, $newPath, $configuration) {
 	}
 }
 
-function resize($imagePath,$opts=null){
+function resize($originalPath,$opts=null){
     try {
         $configuration = new Configuration($opts);
     } catch(InvalidArgumentException $e) {
         return 'cannot resize the image';
     }
-    $originalImage = new Image($imagePath, $configuration);
+    $originalImage = new Image($originalPath, $configuration);
 
 	$resizer = new Resizer($originalImage, $configuration);
 
 
 	// This has to be done in resizer resize
 	try {
-		$imagePath = $originalImage->obtainFilePath();
+		$originalPath = $originalImage->obtainFilePath();
         $newPath = $resizer->composeNewPath();
 	} catch (Exception $e) {
 		return 'image not found';
 	}
 
-    $create = !isInCache($newPath, $imagePath);
+    $create = !isInCache($newPath, $originalPath);
 	if($create == true):
 		try {
-			doResize($imagePath, $newPath, $configuration);
+			doResize($originalImage, $newPath, $configuration);
 		} catch (Exception $e) {
 			return 'cannot resize the image';
 		}

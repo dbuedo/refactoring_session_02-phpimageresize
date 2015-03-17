@@ -61,4 +61,7 @@ class ResizerTest extends PHPUnit_Framework_TestCase {
         $this->assertStringMatchesFormat('./cache/%x_w100_h100_cp_sc.jpg',  $finalImagePath);
     }
 
+
+
+
 }

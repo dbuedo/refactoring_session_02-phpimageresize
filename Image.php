@@ -25,6 +25,12 @@ class Image {
         return in_array($this->obtainScheme(), $this->valid_http_protocols);
     }
 
+    public function isPanoramic() {
+        $imagePath = $this->obtainFilePath();
+        list($width,$height) = $this->fileSystem->getimagesize($imagePath);
+        return $width > $height;
+    }
+
     public function obtainFileName() {
         $finfo = pathinfo($this->path);
         list($filename) = explode('?',$finfo['basename']);
