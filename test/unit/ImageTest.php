@@ -1,7 +1,8 @@
 <?php
 require_once 'Image.php';
+require_once 'Configuration.php';
 
-class ImagePathTest extends PHPUnit_Framework_TestCase {
+class ImageTest extends PHPUnit_Framework_TestCase {
 
     public function testIsSanitizedAtInstantiation() {
         $url = 'https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#safe=off&q=php%20define%20dictionary';
@@ -38,9 +39,8 @@ class ImagePathTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testLocalFilePath() {
-        $localRemoteFolder = './cache/remote/';
         $url = 'http://martinfowler.com/mf.jpg?query=hello&s=fowler';
-        $image = new Image($url, $localRemoteFolder);
+        $image = new Image($url);
 
         $this->assertEquals('./cache/remote/mf.jpg', $image->obtainLocalFilePath());
     }
@@ -56,13 +56,49 @@ class ImagePathTest extends PHPUnit_Framework_TestCase {
         $stub->method('filemtime')
             ->willReturn(10 * 60);
 
-        $image = new Image('http://martinfowler.com/mf.jpg?query=hello&s=fowler', './cache/remote/');
+        $image = new Image('http://martinfowler.com/mf.jpg?query=hello&s=fowler');
         $image->injectFileSystem($stub);
 
         $this->assertTrue($image->isCached($minutesInCache));
 
     }
 
+    public function testObtainLocallyCachedFilePath() {
+        $configuration = new Configuration(array('w' => 800, 'h' => 600));
+        $image = new Image('http://martinfowler.com/mf.jpg?query=hello&s=fowler', $configuration);
+
+        $stub = $this->getMockBuilder('FileSystem')
+            ->getMock();
+        $stub->method('file_get_contents')
+            ->willReturn('foo');
+        $stub->method('file_exists')
+            ->willReturn(true);
+        $stub->method('filemtime')
+            ->willReturn(10 * 60);
+
+        $image->injectFileSystem($stub);
+
+        $this->assertEquals('./cache/remote/mf.jpg', $image->obtainFilePath());
+
+    }
+
+
+    public function testLocallyCachedFilePathFail() {
+        $configuration = new Configuration(array('w' => 800, 'h' => 600));
+        $image = new Image('http://martinfowler.com/mf.jpg?query=hello&s=fowler', $configuration);
+
+        $stub = $this->getMockBuilder('FileSystem')
+            ->getMock();
+        $stub->method('file_exists')
+            ->willReturn(true);
+        $stub->method('filemtime')
+            ->willReturn(21 * 60);
+
+        $image->injectFileSystem($stub);
+
+        $this->assertEquals('./cache/remote/mf.jpg', $image->obtainFilePath());
+
+    }
 
 
 }

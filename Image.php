@@ -3,13 +3,13 @@
 class Image {
 
     private $path;
-    private $localFolder;
+    private $configuration;
     private $valid_http_protocols = array('http', 'https');
     private $fileSystem;
 
-    public function __construct($url='', $localFolder='') {
+    public function __construct($url='', $configuration=null) {
         $this->path = $this->sanitize($url);
-        $this->localFolder = $localFolder;
+        $this->setConfiguration($configuration);
         $this->fileSystem = new FileSystem();
     }
 
@@ -32,7 +32,31 @@ class Image {
     }
 
     public function obtainLocalFilePath() {
-        return $this->localFolder . $this->obtainFileName();
+        return  $this->configuration->obtainRemote() . $this->obtainFileName();
+    }
+
+    public function obtainFilePath() {
+        $imagePath = $this->sanitizedPath();
+
+        if($this->isHttpProtocol()):
+            $local_filepath = $this->obtainLocalFilePath();
+
+            $inCache = $this->isCached($this->configuration->obtainCacheMinutes());
+
+            if(!$inCache):
+                $this->download($local_filepath);
+            endif;
+            $imagePath = $local_filepath;
+        endif;
+
+        if(!$this->fileSystem->file_exists($imagePath)):
+            $imagePath = $_SERVER['DOCUMENT_ROOT'].$imagePath;
+            if(!$this->fileSystem->file_exists($imagePath)):
+                throw new RuntimeException();
+            endif;
+        endif;
+
+        return $imagePath;
     }
 
     public function isCached($minutesInCache) {
@@ -48,6 +72,10 @@ class Image {
         return $this->fileSystem->filemtime($filePath) < strtotime('+'. $minutesInCache. ' minutes');
     }
 
+    private function download($filePath) {
+        $img = $this->fileSystem->file_get_contents($this->path->sanitizedPath());
+        $this->fileSystem->file_put_contents($filePath,$img);
+    }
 
     private function sanitize($path) {
         return urldecode($path);
@@ -58,6 +86,12 @@ class Image {
         $purl = parse_url($this->path);
         if(isset($purl['scheme'])) return $purl['scheme'];
         return '';
+    }
+
+    private function setConfiguration($configuration) {
+        if ($configuration == null) $configuration = new Configuration(array('output-filename'=>'out'));
+        if (!($configuration instanceof Configuration)) throw new InvalidArgumentException();
+        $this->configuration = $configuration;
     }
 
 }

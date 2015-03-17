@@ -26,49 +26,9 @@ class ResizerTest extends PHPUnit_Framework_TestCase {
         $this->assertInstanceOf('Resizer', new Resizer(new Image(''), new Configuration(array('w' => 10))));
     }
 
-    public function testObtainLocallyCachedFilePath() {
-        $configuration = new Configuration(array('w' => 800, 'h' => 600));
-        $imagePath = new Image('http://martinfowler.com/mf.jpg?query=hello&s=fowler', './cache/remote/');
-        $resizer = new Resizer($imagePath, $configuration);
-
-        $stub = $this->getMockBuilder('FileSystem')
-            ->getMock();
-        $stub->method('file_get_contents')
-            ->willReturn('foo');
-        $stub->method('file_exists')
-            ->willReturn(true);
-        $stub->method('filemtime')
-            ->willReturn(10 * 60);
-
-        $resizer->injectFileSystem($stub);
-        $imagePath->injectFileSystem($stub);
-
-        $this->assertEquals('./cache/remote/mf.jpg', $resizer->obtainFilePath());
-
-    }
-
-    public function testLocallyCachedFilePathFail() {
-        $configuration = new Configuration(array('w' => 800, 'h' => 600));
-        $imagePath = new Image('http://martinfowler.com/mf.jpg?query=hello&s=fowler', './cache/remote/');
-        $resizer = new Resizer($imagePath, $configuration);
-
-        $stub = $this->getMockBuilder('FileSystem')
-            ->getMock();
-        $stub->method('file_exists')
-            ->willReturn(true);
-        $stub->method('filemtime')
-            ->willReturn(21 * 60);
-
-        $resizer->injectFileSystem($stub);
-        $imagePath->injectFileSystem($stub);
-
-        $this->assertEquals('./cache/remote/mf.jpg', $resizer->obtainFilePath());
-
-    }
-
     public function testComposeNewPath() {
         $configuration = new Configuration(array('w' => 100, 'h' => 100));
-        $imagePath = new Image('images/dog.jpg');
+        $imagePath = new Image('images/dog.jpg', $configuration);
         $resizer = new Resizer($imagePath, $configuration);
 
         $newPath = $resizer->composeNewPath();
@@ -78,7 +38,7 @@ class ResizerTest extends PHPUnit_Framework_TestCase {
 
     public function testComposeNewPathWithOutputFileName() {
         $configuration = new Configuration(array('output-filename' => 'out.jpg'));
-        $imagePath = new Image('images/dog.jpg');
+        $imagePath = new Image('images/dog.jpg', $configuration);
         $resizer = new Resizer($imagePath, $configuration);
 
         $newPath = $resizer->composeNewPath();
@@ -91,10 +51,10 @@ class ResizerTest extends PHPUnit_Framework_TestCase {
         $imagePath = 'http://farm4.static.flickr.com/3210/2934973285_fa4761c982.jpg';
 
         $configuration = new Configuration($settings);
-        $image = new Image($imagePath, './cache/remote/');
+        $image = new Image($imagePath, $configuration);
         $resizer = new Resizer($image, $configuration);
 
-        $downloadedImagePath = $resizer->obtainFilePath();
+        $downloadedImagePath = $image->obtainFilePath();
         $finalImagePath = $resizer->composeNewPath();
 
         $this->assertEquals('./cache/remote/2934973285_fa4761c982.jpg',  $downloadedImagePath);

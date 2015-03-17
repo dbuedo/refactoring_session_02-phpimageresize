@@ -4,15 +4,15 @@ require 'FileSystem.php';
 
 class Resizer {
 
-    private $path;
+    private $image;
     private $configuration;
     private $fileSystem;
 
-    public function __construct($path, $configuration=null) {
+    public function __construct($image, $configuration=null) {
         if ($configuration == null) $configuration = new Configuration();
-        $this->checkPath($path);
+        $this->checkPath($image);
         $this->checkConfiguration($configuration);
-        $this->path = $path;
+        $this->image = $image;
         $this->configuration = $configuration;
         $this->fileSystem = new FileSystem();
     }
@@ -21,34 +21,10 @@ class Resizer {
         $this->fileSystem = $fileSystem;
     }
 
-    public function obtainFilePath() {
-        $imagePath = $this->path->sanitizedPath();
-
-        if($this->path->isHttpProtocol()):
-            $local_filepath = $this->path->obtainLocalFilePath();
-
-            $inCache = $this->path->isCached($this->configuration->obtainCacheMinutes());
-
-            if(!$inCache):
-                $this->download($local_filepath);
-            endif;
-            $imagePath = $local_filepath;
-        endif;
-
-        if(!$this->fileSystem->file_exists($imagePath)):
-            $imagePath = $_SERVER['DOCUMENT_ROOT'].$imagePath;
-            if(!$this->fileSystem->file_exists($imagePath)):
-                throw new RuntimeException();
-            endif;
-        endif;
-
-        return $imagePath;
-    }
-
     public function composeNewPath() {
         $width = $this->configuration->obtainWidth();
         $height = $this->configuration->obtainHeight();
-        $imagePath = $this->obtainFilePath();
+        $imagePath = $this->image->obtainFilePath();
 
         $filename = md5_file($imagePath);
         $finfo = pathinfo($imagePath);
@@ -69,11 +45,6 @@ class Resizer {
         }
 
         return $newPath;
-    }
-
-    private function download($filePath) {
-        $img = $this->fileSystem->file_get_contents($this->path->sanitizedPath());
-        $this->fileSystem->file_put_contents($filePath,$img);
     }
 
     private function checkPath($path) {

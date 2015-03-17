@@ -112,14 +112,14 @@ function resize($imagePath,$opts=null){
     } catch(InvalidArgumentException $e) {
         return 'cannot resize the image';
     }
-    $originalImage = new Image($imagePath, $configuration->obtainRemote());
+    $originalImage = new Image($imagePath, $configuration);
 
 	$resizer = new Resizer($originalImage, $configuration);
 
 
 	// This has to be done in resizer resize
 	try {
-		$imagePath = $resizer->obtainFilePath();
+		$imagePath = $originalImage->obtainFilePath();
         $newPath = $resizer->composeNewPath();
 	} catch (Exception $e) {
 		return 'image not found';
