@@ -51,11 +51,11 @@ class Configuration {
         return $this->opts;
     }
 
-    public function obtainCache() {
+    public function obtainCacheRootPath() {
         return $this->opts[self::CACHE_KEY];
     }
 
-    public function obtainRemote() {
+    public function obtainRemoteRootPath() {
         return $this->opts[self::REMOTE_KEY];
     }
 

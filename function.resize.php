@@ -40,7 +40,6 @@ function composeResizeOptions($image, $configuration) {
 	$opts = $configuration->asHash();
 	$w = $configuration->obtainWidth();
 	$h = $configuration->obtainHeight();
-    $imagePath = $image->obtainFilePath();
 	$resize = "x".$h;
 
 	$hasCrop = (true === $opts['crop']);
@@ -60,7 +59,7 @@ function composeResizeOptions($image, $configuration) {
 function commandWithScale($image, $newPath, $configuration) {
 	$opts = $configuration->asHash();
     $imagePath = $image->obtainFilePath();
-	$resize = composeResizeOptions($imagePath, $configuration);
+	$resize = composeResizeOptions($image, $configuration);
 
 	$cmd = $configuration->obtainConvertPath() ." ". escapeshellarg($imagePath) ." -resize ". escapeshellarg($resize) .
 		" -quality ". escapeshellarg($opts['quality']) . " " . escapeshellarg($newPath);
@@ -73,7 +72,7 @@ function commandWithCrop($image, $newPath, $configuration) {
 	$w = $configuration->obtainWidth();
 	$h = $configuration->obtainHeight();
     $imagePath = $image->obtainFilePath();
-	$resize = composeResizeOptions($imagePath, $configuration);
+	$resize = composeResizeOptions($image, $configuration);
 
 	$cmd = $configuration->obtainConvertPath() ." ". escapeshellarg($imagePath) ." -resize ". escapeshellarg($resize) .
 		" -size ". escapeshellarg($w ."x". $h) .
@@ -117,14 +116,14 @@ function resize($originalPath,$opts=null){
 
 	// This has to be done in resizer resize
 	try {
-		$originalPath = $originalImage->obtainFilePath();
+		$originalPath = $originalImage->getLocalFilePath();
         $newPath = $resizer->composeNewPath();
 	} catch (Exception $e) {
 		return 'image not found';
 	}
 
     $create = !isInCache($newPath, $originalPath);
-	if($create == true):
+	if($create):
 		try {
 			doResize($originalImage, $newPath, $configuration);
 		} catch (Exception $e) {

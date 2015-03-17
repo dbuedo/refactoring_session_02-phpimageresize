@@ -70,13 +70,13 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase {
     public function testObtainCache() {
         $configuration = new Configuration($this->minimum);
 
-        $this->assertEquals('./cache/', $configuration->obtainCache());
+        $this->assertEquals('./cache/', $configuration->obtainCacheRootPath());
     }
 
     public function testObtainRemote() {
         $configuration = new Configuration($this->minimum);
 
-        $this->assertEquals('./cache/remote/', $configuration->obtainRemote());
+        $this->assertEquals('./cache/remote/', $configuration->obtainRemoteRootPath());
     }
 
     public function testObtainConvertPath() {

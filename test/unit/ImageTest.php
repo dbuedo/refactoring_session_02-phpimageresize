@@ -10,24 +10,24 @@ class ImageTest extends PHPUnit_Framework_TestCase {
 
         $image = new Image($url);
 
-        $this->assertEquals($expected, $image->sanitizedPath());
+        $this->assertEquals($expected, $image->getInputPath());
     }
 
-    public function testIsHttpProtocol() {
+    public function testIsRemote() {
         $image = new Image('https://example.com');
-        $this->assertTrue($image->isHttpProtocol());
+        $this->assertTrue($image->isRemote());
 
         $image = new Image('ftp://example.com');
-        $this->assertFalse($image->isHttpProtocol());
+        $this->assertFalse($image->isRemote());
 
         $image = new Image(null);
-        $this->assertFalse($image->isHttpProtocol());
+        $this->assertFalse($image->isRemote());
 
         $image = new Image('/absolute/local/path');
-        $this->assertFalse($image->isHttpProtocol());
+        $this->assertFalse($image->isRemote());
 
         $image = new Image('relative/local/path');
-        $this->assertFalse($image->isHttpProtocol());
+        $this->assertFalse($image->isRemote());
     }
 
     public function testObtainFileName() {
@@ -38,15 +38,15 @@ class ImageTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('mf.jpg', $image->obtainFileName());
     }
 
-    public function testLocalFilePath() {
+    public function testLocalRemotePath() {
         $url = 'http://martinfowler.com/mf.jpg?query=hello&s=fowler';
         $image = new Image($url);
 
-        $this->assertEquals('./cache/remote/mf.jpg', $image->obtainLocalFilePath());
+        $this->assertEquals('./cache/remote/mf.jpg', $image->obtainLocalRemotePath());
     }
 
     public function testIsCached() {
-        $minutesInCache = 20;
+        $configuration = new Configuration(array('output-filename' => 'out', 'cache_http_minutes' => 20));
         $stub = $this->getMockBuilder('FileSystem')
             ->getMock();
         $stub->method('file_get_contents')
@@ -56,10 +56,10 @@ class ImageTest extends PHPUnit_Framework_TestCase {
         $stub->method('filemtime')
             ->willReturn(10 * 60);
 
-        $image = new Image('http://martinfowler.com/mf.jpg?query=hello&s=fowler');
+        $image = new Image('http://martinfowler.com/mf.jpg?query=hello&s=fowler', $configuration);
         $image->injectFileSystem($stub);
 
-        $this->assertTrue($image->isCached($minutesInCache));
+        $this->assertTrue($image->isCached());
 
     }
 
@@ -117,7 +117,7 @@ class ImageTest extends PHPUnit_Framework_TestCase {
 
         $image->injectFileSystem($stub);
 
-        $this->assertEquals('./cache/remote/mf.jpg', $image->obtainFilePath());
+        $this->assertEquals('./cache/remote/mf.jpg', $image->getLocalFilePath());
 
     }
 
@@ -135,7 +135,7 @@ class ImageTest extends PHPUnit_Framework_TestCase {
 
         $image->injectFileSystem($stub);
 
-        $this->assertEquals('./cache/remote/mf.jpg', $image->obtainFilePath());
+        $this->assertEquals('./cache/remote/mf.jpg', $image->getLocalFilePath());
 
     }
 

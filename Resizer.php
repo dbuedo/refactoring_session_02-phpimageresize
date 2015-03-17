@@ -24,7 +24,7 @@ class Resizer {
     public function composeNewPath() {
         $width = $this->configuration->obtainWidth();
         $height = $this->configuration->obtainHeight();
-        $imagePath = $this->image->obtainFilePath();
+        $imagePath = $this->image->getLocalFilePath();
 
         $filename = md5_file($imagePath);
         $finfo = pathinfo($imagePath);
@@ -38,7 +38,7 @@ class Resizer {
         $heightSignal = !empty($height) ? '_h'.$height : '';
         $extension = '.'.$ext;
 
-        $newPath = $this->configuration->obtainCache() .$filename.$widthSignal.$heightSignal.$cropSignal.$scaleSignal.$extension;
+        $newPath = $this->configuration->obtainCacheRootPath() .$filename.$widthSignal.$heightSignal.$cropSignal.$scaleSignal.$extension;
 
         if($opts['output-filename']) {
             $newPath = $opts['output-filename'];
