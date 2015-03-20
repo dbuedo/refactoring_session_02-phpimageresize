@@ -74,6 +74,23 @@ class Configuration {
     public function obtainCacheMinutes() {
         return $this->opts[self::CACHE_MINUTES_KEY];
     }
+
+    public function obtainMaxOnly() {
+        return $this->opts[self::MAX_ONLY_KEY];
+    }
+
+    public function obtainQuality() {
+        return $this->opts[self::QUALITY_KEY];
+    }
+
+    public function obtainCanvasColor() {
+        return $this->opts[self::CANVAS_COLOR_KEY];
+    }
+
+    public function obtainCrop() {
+        return $this->opts[self::CROP_KEY];
+    }
+
     private function sanitize($opts) {
         if($opts == null) return array();
 

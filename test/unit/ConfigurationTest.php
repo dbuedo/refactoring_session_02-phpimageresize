@@ -85,6 +85,29 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('convert', $configuration->obtainConvertPath());
     }
 
+    public function testMaxOnly() {
+        $configuration = new Configuration($this->minimum);
+
+        $this->assertEquals(false, $configuration->obtainMaxOnly());
+    }
+
+    public function testQuality() {
+        $configuration = new Configuration($this->minimum);
+
+        $this->assertEquals(90, $configuration->obtainQuality());
+    }
+
+    public function testCanvasColor() {
+        $configuration = new Configuration($this->minimum);
+
+        $this->assertEquals('transparent', $configuration->obtainCanvasColor());
+    }
+
+    public function testObtainCrop() {
+        $configuration = new Configuration($this->minimum);
+
+        $this->assertEquals(false, $configuration->obtainCrop());
+    }
 }
 
 

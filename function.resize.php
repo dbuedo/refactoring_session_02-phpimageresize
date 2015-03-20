@@ -53,30 +53,19 @@ function _buildCommand($originalImage, $newPath, $configuration) {
     $w = $configuration->obtainWidth();
     $h = $configuration->obtainHeight();
 
+    $commandComposer = new CommandComposer($configuration);
+
     if (!empty($w) and !empty($h)):
-        $cmd = _commandWithCrop($originalImage, $newPath, $configuration);
+        $cmd = $commandComposer->withCropCommand($originalImage->obtainFilePath(), $newPath, $originalImage->isPanoramic());
         if (true === $opts['scale']):
             $cmd = _commandWithScale($originalImage, $newPath, $configuration);
             return $cmd;
         endif;
         return $cmd;
     else:
-        $cmd = _defaultShellCommand($originalImage, $newPath, $configuration);
+        $cmd = $commandComposer->defaultCommand($originalImage->obtainFilePath(), $newPath);
         return $cmd;
     endif;
-}
-
-function _defaultShellCommand($image, $newPath, $configuration) {
-	$opts = $configuration->asHash();
-	$w = $configuration->obtainWidth();
-	$h = $configuration->obtainHeight();
-    $imagePath = $image->obtainFilePath();
-	$command = $configuration->obtainConvertPath() ." " . escapeshellarg($imagePath) .
-	" -thumbnail ". (!empty($h) ? 'x':'') . $w ."".
-	(isset($opts['maxOnly']) && $opts['maxOnly'] == true ? "\>" : "") .
-	" -quality ". escapeshellarg($opts['quality']) ." ". escapeshellarg($newPath);
-
-	return $command;
 }
 
 function _composeResizeOptions($image, $configuration) {
@@ -110,20 +99,6 @@ function _commandWithScale($image, $newPath, $configuration) {
 	return $cmd;
 }
 
-function _commandWithCrop($image, $newPath, $configuration) {
-	$opts = $configuration->asHash();
-	$w = $configuration->obtainWidth();
-	$h = $configuration->obtainHeight();
-    $imagePath = $image->obtainFilePath();
-	$resize = _composeResizeOptions($image, $configuration);
-
-	$cmd = $configuration->obtainConvertPath() ." ". escapeshellarg($imagePath) ." -resize ". escapeshellarg($resize) .
-		" -size ". escapeshellarg($w ."x". $h) .
-		" xc:". escapeshellarg($opts['canvas-color']) .
-		" +swap -gravity center -composite -quality ". escapeshellarg($opts['quality'])." ".escapeshellarg($newPath);
-
-	return $cmd;
-}
 
 
 
