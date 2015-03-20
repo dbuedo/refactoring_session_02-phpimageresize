@@ -3,6 +3,7 @@
 require 'Image.php';
 require 'Configuration.php';
 require 'Resizer.php';
+require 'CommandComposer.php';
 
 
 function resize($originalPath,$opts=null){
