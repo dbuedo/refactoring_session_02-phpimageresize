@@ -91,6 +91,10 @@ class Configuration {
         return $this->opts[self::CROP_KEY];
     }
 
+    public function obtainScale() {
+        return $this->opts[self::SCALE_KEY];
+    }
+
     private function sanitize($opts) {
         if($opts == null) return array();
 

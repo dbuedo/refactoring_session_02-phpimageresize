@@ -10,32 +10,49 @@ class CommandComposer {
         $this->configuration = $configuration;
     }
 
-    public function defaultCommand($imagePath, $outputPath) {
+    public function composeCommand($imagePath, $outputPath, $isPanoramic) {
         $command = $this->configuration->obtainConvertPath();
         $command .= $this->addEscapedParam($imagePath);
-        $command .= $this->addThumbnailParam();
-        $command .= $this->addMaxOnlyParam();
+
+        if ($this->noDimensions()):
+            $command .= $this->addDefaultParams();
+        else:
+            $command .= $this->addResizeParam($isPanoramic);
+            if ($this->dontScale()):
+                $command .= $this->addCropParams();
+            endif;
+        endif;
+
         $command .= $this->addQualityParam();
         $command .= $this->addEscapedParam($outputPath);
 
         return $command;
     }
 
-    public function withCropCommand($imagePath, $outputPath, $isPanoramic) {
-        $command = $this->configuration->obtainConvertPath();
-        $command .= $this->addEscapedParam($imagePath);
-        $command .= $this->addResizeParam($isPanoramic);
-        $command .= $this->addSizeParam();
+    private function noDimensions() {
+        $w = $this->configuration->obtainWidth();
+        $h = $this->configuration->obtainHeight();
+        return empty($w) or empty($h);
+    }
+
+    private function dontScale() {
+        return !(true === $this->configuration->obtainScale());
+    }
+
+    private function addDefaultParams() {
+        $command = $this->addThumbnailParam();
+        $command .= $this->addMaxOnlyParam();
+        return $command;
+    }
+
+    private function addCropParams() {
+        $command = $this->addSizeParam();
         $command .= $this->addCanvasColorParam();
         $command .= $this->addSwapParam();
         $command .= $this->addGravityParam();
         $command .= $this->addCompositeParam();
-        $command .= $this->addQualityParam();
-        $command .= $this->addEscapedParam($outputPath);
-
         return $command;
     }
-
 
     private function addEscapedParam($imagePath) {
         return " " . escapeshellarg($imagePath);
@@ -106,7 +123,6 @@ class CommandComposer {
     private function checkConfiguration($configuration) {
         if (!($configuration instanceof Configuration)) throw new InvalidArgumentException();
     }
-
 
 
 

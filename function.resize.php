@@ -49,55 +49,11 @@ function _executeCommand($command) {
 }
 
 function _buildCommand($originalImage, $newPath, $configuration) {
-    $opts = $configuration->asHash();
-    $w = $configuration->obtainWidth();
-    $h = $configuration->obtainHeight();
-
     $commandComposer = new CommandComposer($configuration);
+    return $commandComposer->composeCommand($originalImage->obtainFilePath(), $newPath, $originalImage->isPanoramic());
 
-    if (!empty($w) and !empty($h)):
-        $cmd = $commandComposer->withCropCommand($originalImage->obtainFilePath(), $newPath, $originalImage->isPanoramic());
-        if (true === $opts['scale']):
-            $cmd = _commandWithScale($originalImage, $newPath, $configuration);
-            return $cmd;
-        endif;
-        return $cmd;
-    else:
-        $cmd = $commandComposer->defaultCommand($originalImage->obtainFilePath(), $newPath);
-        return $cmd;
-    endif;
 }
 
-function _composeResizeOptions($image, $configuration) {
-	$opts = $configuration->asHash();
-	$w = $configuration->obtainWidth();
-	$h = $configuration->obtainHeight();
-	$resize = "x".$h;
-
-	$hasCrop = (true === $opts['crop']);
-
-    if(!$hasCrop && $image->isPanoramic()):
-        $resize = $w;
-    endif;
-
-    if($hasCrop && !$image->isPanoramic()):
-        $resize = $w;
-    endif;
-
-
-    return $resize;
-}
-
-function _commandWithScale($image, $newPath, $configuration) {
-	$opts = $configuration->asHash();
-    $imagePath = $image->obtainFilePath();
-	$resize = _composeResizeOptions($image, $configuration);
-
-	$cmd = $configuration->obtainConvertPath() ." ". escapeshellarg($imagePath) ." -resize ". escapeshellarg($resize) .
-		" -quality ". escapeshellarg($opts['quality']) . " " . escapeshellarg($newPath);
-
-	return $cmd;
-}
 
 
 
