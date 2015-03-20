@@ -21,6 +21,8 @@ class Resizer {
         $this->fileSystem = $fileSystem;
     }
 
+
+
     public function composeNewPath() {
         $width = $this->configuration->obtainWidth();
         $height = $this->configuration->obtainHeight();

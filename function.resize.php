@@ -15,49 +15,55 @@ function resize($originalPath,$opts=null){
 
     $resizer = new Resizer($originalImage, $configuration);
 
-
-    // This has to be done in resizer resize
     try {
-        $originalPath = $originalImage->getLocalFilePath();
-        $newPath = $resizer->composeNewPath();
-    } catch (Exception $e) {
+        $resizedImagePath = _doResize($resizer, $originalImage, $configuration);
+    } catch (ImageNotFoundException $e) {
         return 'image not found';
+    } catch (Exception $e) {
+        return 'cannot resize the image';
     }
 
-    if(!$resizer->isImageAlreadyResized()):
-        try {
-            _doResize($originalImage, $newPath, $configuration);
-        } catch (Exception $e) {
-            return 'cannot resize the image';
-        }
-    endif;
-
-    // The new path must be the return value of resizer resize
-    $cacheFilePath = str_replace($_SERVER['DOCUMENT_ROOT'],'',$newPath);
-
-    return $cacheFilePath;
-
+    return $resizedImagePath;
 }
 
-function _doResize($originalImage, $newPath, $configuration) {
+
+function _doResize($resizer, $originalImage, $configuration) {
+    $newPath = $resizer->composeNewPath();
+
+    if (!$resizer->isImageAlreadyResized()):
+        $command = _buildCommand($originalImage, $newPath, $configuration);
+        _executeCommand($command);
+    endif;
+
+    $cacheFilePath = str_replace($_SERVER['DOCUMENT_ROOT'], '', $newPath);
+    return $cacheFilePath;
+}
+
+
+function _executeCommand($command) {
+    exec($command, $output, $return_code);
+    if ($return_code != 0) {
+        error_log("Tried to execute : $command, return code: $return_code, output: " . print_r($output, true));
+        throw new RuntimeException();
+    }
+}
+
+function _buildCommand($originalImage, $newPath, $configuration) {
     $opts = $configuration->asHash();
     $w = $configuration->obtainWidth();
     $h = $configuration->obtainHeight();
 
-    if(!empty($w) and !empty($h)):
+    if (!empty($w) and !empty($h)):
         $cmd = _commandWithCrop($originalImage, $newPath, $configuration);
-        if(true === $opts['scale']):
+        if (true === $opts['scale']):
             $cmd = _commandWithScale($originalImage, $newPath, $configuration);
+            return $cmd;
         endif;
+        return $cmd;
     else:
         $cmd = _defaultShellCommand($originalImage, $newPath, $configuration);
+        return $cmd;
     endif;
-
-    $c = exec($cmd, $output, $return_code);
-    if($return_code != 0) {
-        error_log("Tried to execute : $cmd, return code: $return_code, output: " . print_r($output, true));
-        throw new RuntimeException();
-    }
 }
 
 function _defaultShellCommand($image, $newPath, $configuration) {

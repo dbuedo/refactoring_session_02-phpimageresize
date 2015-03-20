@@ -140,4 +140,23 @@ class ImageTest extends PHPUnit_Framework_TestCase {
     }
 
 
+    /**
+     * @expectedException ImageNotFoundException
+     */
+    public function testImageNotFoundException() {
+        $stub = $this->getMockBuilder('FileSystem')
+            ->getMock();
+        $stub->method('file_get_contents')
+            ->willReturn('foo');
+        $stub->method('file_exists')
+            ->willReturn(false);
+        $stub->method('filemtime')
+            ->willReturn(10 * 60);
+
+        $image = new Image('images/notfound.jpg');
+        $image->injectFileSystem($stub);
+
+        $image->getLocalFilePath();
+    }
+
 }

@@ -61,7 +61,7 @@ class Image {
         if (!$this->fileSystem->file_exists($actualFilePath)):
             $actualFilePath = $_SERVER['DOCUMENT_ROOT'] . $actualFilePath;
             if (!$this->fileSystem->file_exists($actualFilePath)):
-                throw new RuntimeException();
+                throw new ImageNotFoundException('path: ' . $actualFilePath);
             endif;
             return $actualFilePath;
         endif;
@@ -112,4 +112,14 @@ class Image {
         $this->configuration = $configuration;
     }
 
+}
+
+class ImageNotFoundException extends RuntimeException {
+    public function __construct($message = null, $code = null, Exception $previous = null) {
+        parent::__construct($message, $code, $previous);
+    }
+
+    public function __toString() {
+        return __CLASS__ . ": [{$this->code}]: {$this->message}\n";
+    }
 }
