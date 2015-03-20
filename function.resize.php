@@ -24,8 +24,7 @@ function resize($originalPath,$opts=null){
         return 'image not found';
     }
 
-    $create = !_isInCache($newPath, $originalPath);
-    if($create):
+    if(!$resizer->isImageAlreadyResized()):
         try {
             _doResize($originalImage, $newPath, $configuration);
         } catch (Exception $e) {
@@ -60,21 +59,6 @@ function _doResize($originalImage, $newPath, $configuration) {
         throw new RuntimeException();
     }
 }
-
-function _isInCache($newPath, $originalPath) {
-	$isInCache = false;
-	if(file_exists($newPath) == true):
-		$isInCache = true;
-		$origFileTime = date("YmdHis",filemtime($originalPath));
-		$newFileTime = date("YmdHis",filemtime($newPath));
-		if($newFileTime < $origFileTime): # Not using $opts['expire-time'] ??
-			$isInCache = false;
-		endif;
-	endif;
-
-	return $isInCache;
-}
-
 
 function _defaultShellCommand($image, $newPath, $configuration) {
 	$opts = $configuration->asHash();

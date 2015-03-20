@@ -47,6 +47,21 @@ class Resizer {
         return $newPath;
     }
 
+    public function isImageAlreadyResized() {
+        $newPath = $this->composeNewPath();
+        $isInCache = false;
+        if($this->fileSystem->file_exists($newPath)):
+            $isInCache = true;
+            $origFileTime = date("YmdHis",$this->fileSystem->filemtime($this->image->getLocalFilePath()));
+            $newFileTime = date("YmdHis",$this->fileSystem->filemtime($newPath));
+            if($newFileTime < $origFileTime):
+                $isInCache = false;
+            endif;
+        endif;
+
+        return $isInCache;
+    }
+
     private function checkPath($path) {
         if (!($path instanceof Image)) throw new InvalidArgumentException();
     }

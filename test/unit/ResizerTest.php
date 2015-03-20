@@ -61,6 +61,93 @@ class ResizerTest extends PHPUnit_Framework_TestCase {
         $this->assertStringMatchesFormat('./cache/%x_w100_h100_cp_sc.jpg',  $finalImagePath);
     }
 
+    public function testImageAlreadyResized() {
+        $settings = array('w'=>100,'h'=>100,'crop'=>true);
+        $originalPath = './cache/remote/2934973285_fa4761c982.jpg';
+        $newPath = './cache/efe167de8d896c225107b6ff9b0c93af_w100_h100_cp_sc.jpg';
+
+        $older_time = 5;
+        $newer_time = 10;
+
+        $filemtimeResponseMap = array(
+            array($originalPath, $older_time),
+            array($newPath, $newer_time)
+        );
+
+        $stub = $this->getMockBuilder('FileSystem')
+            ->getMock();
+        $stub->method('file_exists')
+            ->willReturn(true);
+        $stub->method('filemtime')
+            ->will($this->returnValueMap($filemtimeResponseMap));
+
+        $configuration = new Configuration($settings);
+        $image = new Image($originalPath, $configuration);
+        $resizer = new Resizer($image, $configuration);
+
+        $resizer->injectFileSystem($stub);
+
+        $this->assertTrue($resizer->isImageAlreadyResized());
+
+    }
+
+    public function testImageNotResizedYet() {
+        $settings = array('w'=>100,'h'=>100,'crop'=>true);
+        $originalPath = './cache/remote/2934973285_fa4761c982.jpg';
+        $newPath = './cache/efe167de8d896c225107b6ff9b0c93af_w100_h100_cp_sc.jpg';
+
+
+        $originalpathStub = $this->getMockBuilder('FileSystem')
+            ->getMock();
+        $originalpathStub->method('file_exists')
+            ->willReturn(true);
+
+        $newpathStub = $this->getMockBuilder('FileSystem')
+            ->getMock();
+        $newpathStub->method('file_exists')
+            ->willReturn(false);
+
+
+        $configuration = new Configuration($settings);
+        $image = new Image($originalPath, $configuration);
+        $resizer = new Resizer($image, $configuration);
+
+        $image->injectFileSystem($originalpathStub);
+        $resizer->injectFileSystem($newpathStub);
+
+        $this->assertFalse($resizer->isImageAlreadyResized());
+
+    }
+
+    public function testImageResizedButCacheImageIsOlder() {
+        $settings = array('w'=>100,'h'=>100,'crop'=>true);
+        $originalPath = './cache/remote/2934973285_fa4761c982.jpg';
+        $newPath = './cache/efe167de8d896c225107b6ff9b0c93af_w100_h100_cp_sc.jpg';
+
+        $older_time = 5;
+        $newer_time = 10;
+
+        $filemtimeResponseMap = array(
+            array($originalPath, $newer_time),
+            array($newPath, $older_time)
+        );
+
+        $stub = $this->getMockBuilder('FileSystem')
+            ->getMock();
+        $stub->method('file_exists')
+            ->willReturn(true);
+        $stub->method('filemtime')
+            ->will($this->returnValueMap($filemtimeResponseMap));
+
+        $configuration = new Configuration($settings);
+        $image = new Image($originalPath, $configuration);
+        $resizer = new Resizer($image, $configuration);
+
+        $resizer->injectFileSystem($stub);
+
+        $this->assertFalse($resizer->isImageAlreadyResized());
+
+    }
 
 
 
