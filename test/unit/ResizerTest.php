@@ -149,6 +149,51 @@ class ResizerTest extends PHPUnit_Framework_TestCase {
 
     }
 
+    public function testComposeCommand() {
+        $settings = array('w'=>10,'h'=>20,'crop'=>true);
+        $originalPath = './cache/remote/2934973285_fa4761c982.jpg';
+        $newPath = './cache/efe167de8d896c225107b6ff9b0c93af_w100_h100_cp_sc.jpg';
+
+        $configuration = new Configuration($settings);
+        $image = new Image($originalPath, $configuration);
+        $resizer = new Resizer($image, $configuration);
+
+        $command = $resizer->composeCommand($newPath);
+
+        $this->assertEquals("convert './cache/remote/2934973285_fa4761c982.jpg' -resize '10' -size '10x20' xc:'transparent' +swap -gravity center -composite -quality '90' './cache/efe167de8d896c225107b6ff9b0c93af_w100_h100_cp_sc.jpg'", $command);
+    }
+
+
+    public function testExecuteCommand() {
+        $settings = array('w'=>100,'h'=>100,'crop'=>true);
+        $originalPath = './cache/remote/2934973285_fa4761c982.jpg';
+        $newPath = './cache/efe167de8d896c225107b6ff9b0c93af_w100_h100_cp_sc.jpg';
+
+        $configuration = new Configuration($settings);
+        $image = new Image($originalPath, $configuration);
+        $resizer = new Resizer($image, $configuration);
+
+        $command = $resizer->composeCommand($newPath);
+
+        $result = $resizer->executeCommand($command);
+
+        $this->assertTrue($result);
+    }
+
+    public function testResize() {
+        $settings = array('w'=>100,'h'=>100,'crop'=>true);
+        $originalPath = './cache/remote/2934973285_fa4761c982.jpg';
+        $newPath = './cache/efe167de8d896c225107b6ff9b0c93af_w100_h100_cp_sc.jpg';
+        $expectedResultImage = str_replace($_SERVER['DOCUMENT_ROOT'], '', $newPath);
+
+        $configuration = new Configuration($settings);
+        $image = new Image($originalPath, $configuration);
+        $resizer = new Resizer($image, $configuration);
+
+        $resultImage = $resizer->resize();
+
+        $this->assertEquals($expectedResultImage, $resultImage);
+    }
 
 
 }

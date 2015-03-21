@@ -17,6 +17,19 @@ class Resizer {
         $this->fileSystem = new FileSystem();
     }
 
+
+    public function resize() {
+        $newPath = $this->composeNewPath();
+
+        if (!$this->isImageAlreadyResized()):
+            $command = $this->composeCommand($newPath);
+            $this->executeCommand($command);
+        endif;
+
+        $resizedImage = str_replace($_SERVER['DOCUMENT_ROOT'], '', $newPath);
+        return $resizedImage;
+    }
+
     public function injectFileSystem(FileSystem $fileSystem) {
         $this->fileSystem = $fileSystem;
     }
@@ -62,6 +75,21 @@ class Resizer {
         endif;
 
         return $isInCache;
+    }
+
+    public function composeCommand($newPath) {
+        $commandComposer = new CommandComposer($this->configuration);
+        return $commandComposer->composeCommand($this->image->obtainFilePath(), $newPath, $this->image->isPanoramic());
+    }
+
+    public function executeCommand($command) {
+        $result = true;
+        exec($command, $output, $return_code);
+        if ($return_code != 0) {
+            error_log("Tried to execute : $command, return code: $return_code, output: " . print_r($output, true));
+            throw new RuntimeException();
+        }
+        return $result;
     }
 
     private function checkPath($path) {
