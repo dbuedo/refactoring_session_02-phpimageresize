@@ -95,6 +95,10 @@ class Configuration {
         return $this->opts[self::SCALE_KEY];
     }
 
+    public function obtainOutputFilename() {
+        return $this->opts[self::OUTPUT_FILE_NAME_KEY];
+    }
+
     private function sanitize($opts) {
         if($opts == null) return array();
 

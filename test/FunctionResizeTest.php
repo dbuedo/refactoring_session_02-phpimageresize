@@ -1,5 +1,5 @@
 <?php
-include 'function.resize.php';
+require_once 'function.resize.php';
 
 class FunctionResizeTest extends PHPUnit_Framework_TestCase {
 

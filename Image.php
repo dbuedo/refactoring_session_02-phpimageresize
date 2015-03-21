@@ -40,8 +40,8 @@ class Image {
     }
 
     public function obtainFileName() {
-        $finfo = pathinfo($this->inputPath);
-        list($filename) = explode('?',$finfo['basename']);
+        $fileInfo = pathinfo($this->inputPath);
+        list($filename) = explode('?',$fileInfo['basename']);
         return $filename;
     }
 
@@ -101,8 +101,8 @@ class Image {
 
     private function obtainScheme() {
         if ($this->inputPath == '') return '';
-        $purl = parse_url($this->inputPath);
-        if(isset($purl['scheme'])) return $purl['scheme'];
+        $parsedUrl = parse_url($this->inputPath);
+        if(isset($parsedUrl['scheme'])) return $parsedUrl['scheme'];
         return '';
     }
 

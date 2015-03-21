@@ -1,5 +1,6 @@
 <?php
 
+require_once 'Configuration.php';
 require_once 'CommandComposer.php';
 
 class CommandComposerTest extends PHPUnit_Framework_TestCase {

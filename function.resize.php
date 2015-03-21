@@ -1,9 +1,10 @@
 <?php
 
-require 'Image.php';
-require 'Configuration.php';
-require 'Resizer.php';
-require 'CommandComposer.php';
+require_once 'Image.php';
+require_once 'Configuration.php';
+require_once 'PathComposer.php';
+require_once 'CommandComposer.php';
+require_once 'Resizer.php';
 
 
 function resize($originalPath,$opts=null){

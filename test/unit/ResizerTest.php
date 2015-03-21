@@ -26,40 +26,6 @@ class ResizerTest extends PHPUnit_Framework_TestCase {
         $this->assertInstanceOf('Resizer', new Resizer(new Image(''), new Configuration(array('w' => 10))));
     }
 
-    public function testComposeNewPath() {
-        $configuration = new Configuration(array('w' => 100, 'h' => 100));
-        $imagePath = new Image('images/dog.jpg', $configuration);
-        $resizer = new Resizer($imagePath, $configuration);
-
-        $newPath = $resizer->composeNewPath();
-
-        $this->assertStringMatchesFormat('./cache/%x_w100_h100_sc.jpg',  $newPath);
-    }
-
-    public function testComposeNewPathWithOutputFileName() {
-        $configuration = new Configuration(array('output-filename' => 'out.jpg'));
-        $imagePath = new Image('images/dog.jpg', $configuration);
-        $resizer = new Resizer($imagePath, $configuration);
-
-        $newPath = $resizer->composeNewPath();
-
-        $this->assertEquals('out.jpg',  $newPath);
-    }
-
-    public function testResizeCropRemoteImage() {
-        $settings = array('w'=>100,'h'=>100,'crop'=>true);
-        $imagePath = 'http://farm4.static.flickr.com/3210/2934973285_fa4761c982.jpg';
-
-        $configuration = new Configuration($settings);
-        $image = new Image($imagePath, $configuration);
-        $resizer = new Resizer($image, $configuration);
-
-        $downloadedImagePath = $image->obtainFilePath();
-        $finalImagePath = $resizer->composeNewPath();
-
-        $this->assertEquals('./cache/remote/2934973285_fa4761c982.jpg',  $downloadedImagePath);
-        $this->assertStringMatchesFormat('./cache/%x_w100_h100_cp_sc.jpg',  $finalImagePath);
-    }
 
     public function testImageAlreadyResized() {
         $settings = array('w'=>100,'h'=>100,'crop'=>true);
@@ -87,7 +53,7 @@ class ResizerTest extends PHPUnit_Framework_TestCase {
 
         $resizer->injectFileSystem($stub);
 
-        $this->assertTrue($resizer->isImageAlreadyResized());
+        $this->assertTrue($resizer->alreadyResized($newPath));
 
     }
 
@@ -115,7 +81,7 @@ class ResizerTest extends PHPUnit_Framework_TestCase {
         $image->injectFileSystem($originalpathStub);
         $resizer->injectFileSystem($newpathStub);
 
-        $this->assertFalse($resizer->isImageAlreadyResized());
+        $this->assertFalse($resizer->alreadyResized($newPath));
 
     }
 
@@ -145,7 +111,7 @@ class ResizerTest extends PHPUnit_Framework_TestCase {
 
         $resizer->injectFileSystem($stub);
 
-        $this->assertFalse($resizer->isImageAlreadyResized());
+        $this->assertFalse($resizer->alreadyResized($newPath));
 
     }
 
@@ -175,7 +141,7 @@ class ResizerTest extends PHPUnit_Framework_TestCase {
 
         $command = $resizer->composeCommand($newPath);
 
-        $result = $resizer->executeCommand($command);
+        $result = $resizer->executeResizeCommand($command);
 
         $this->assertTrue($result);
     }

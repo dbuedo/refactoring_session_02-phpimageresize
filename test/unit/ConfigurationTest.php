@@ -114,6 +114,12 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals('false', $configuration->obtainScale());
     }
+
+    public function testOutputFileName() {
+        $configuration = new Configuration($this->minimum);
+
+        $this->assertEquals('out', $configuration->obtainOutputFilename());
+    }
 }
 
 

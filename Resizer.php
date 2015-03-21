@@ -1,6 +1,11 @@
 <?php
 
-require 'FileSystem.php';
+require_once 'Image.php';
+require_once 'Configuration.php';
+require_once 'PathComposer.php';
+require_once 'CommandComposer.php';
+require_once 'FileSystem.php';
+
 
 class Resizer {
 
@@ -17,58 +22,28 @@ class Resizer {
         $this->fileSystem = new FileSystem();
     }
 
-
     public function resize() {
-        $newPath = $this->composeNewPath();
+        $newPath = $this->composeNewImagePath();
 
-        if (!$this->isImageAlreadyResized()):
+        if (!$this->alreadyResized($newPath)):
             $command = $this->composeCommand($newPath);
-            $this->executeCommand($command);
+            $this->executeResizeCommand($command);
         endif;
 
-        $resizedImage = str_replace($_SERVER['DOCUMENT_ROOT'], '', $newPath);
-        return $resizedImage;
+        return $this->obtainFullPath($newPath);
     }
 
-    public function injectFileSystem(FileSystem $fileSystem) {
-        $this->fileSystem = $fileSystem;
+    private function composeNewImagePath() {
+        $pathComposer = new PathComposer($this->configuration, $this->image);
+        return $pathComposer->compose();
     }
 
-
-
-    public function composeNewPath() {
-        $width = $this->configuration->obtainWidth();
-        $height = $this->configuration->obtainHeight();
-        $imagePath = $this->image->getLocalFilePath();
-
-        $filename = md5_file($imagePath);
-        $finfo = pathinfo($imagePath);
-        $ext = $finfo['extension'];
-
-        $opts = $this->configuration->asHash();
-
-        $cropSignal = isset($opts['crop']) && $opts['crop'] == true ? "_cp" : "";
-        $scaleSignal = isset($opts['scale']) && $opts['scale'] == true ? "_sc" : "";
-        $widthSignal = !empty($width) ? '_w'.$width : '';
-        $heightSignal = !empty($height) ? '_h'.$height : '';
-        $extension = '.'.$ext;
-
-        $newPath = $this->configuration->obtainCacheRootPath() .$filename.$widthSignal.$heightSignal.$cropSignal.$scaleSignal.$extension;
-
-        if($opts['output-filename']) {
-            $newPath = $opts['output-filename'];
-        }
-
-        return $newPath;
-    }
-
-    public function isImageAlreadyResized() {
-        $newPath = $this->composeNewPath();
+    public function alreadyResized($newPath) {
         $isInCache = false;
         if($this->fileSystem->file_exists($newPath)):
             $isInCache = true;
-            $origFileTime = date("YmdHis",$this->fileSystem->filemtime($this->image->getLocalFilePath()));
-            $newFileTime = date("YmdHis",$this->fileSystem->filemtime($newPath));
+            $origFileTime = $this->obtainLastModificationDate($this->image->getLocalFilePath());
+            $newFileTime = $this->obtainLastModificationDate($newPath);
             if($newFileTime < $origFileTime):
                 $isInCache = false;
             endif;
@@ -82,7 +57,7 @@ class Resizer {
         return $commandComposer->composeCommand($this->image->obtainFilePath(), $newPath, $this->image->isPanoramic());
     }
 
-    public function executeCommand($command) {
+    public function executeResizeCommand($command) {
         $result = true;
         exec($command, $output, $return_code);
         if ($return_code != 0) {
@@ -92,6 +67,18 @@ class Resizer {
         return $result;
     }
 
+    public function injectFileSystem(FileSystem $fileSystem) {
+        $this->fileSystem = $fileSystem;
+    }
+
+    private function obtainLastModificationDate($path) {
+        return date("YmdHis",$this->fileSystem->filemtime($path));
+    }
+
+    private function obtainFullPath($newPath) {
+        return str_replace($_SERVER['DOCUMENT_ROOT'], '', $newPath);
+    }
+
     private function checkPath($path) {
         if (!($path instanceof Image)) throw new InvalidArgumentException();
     }
@@ -99,5 +86,6 @@ class Resizer {
     private function checkConfiguration($configuration) {
         if (!($configuration instanceof Configuration)) throw new InvalidArgumentException();
     }
+
 
 }

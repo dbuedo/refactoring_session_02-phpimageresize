@@ -25,81 +25,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="function.resize.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="function.resize.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/function.resize.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.9825583" vertical-offset="0" max-vertical-offset="2664">
-              <caret line="114" column="73" selection-start-line="114" selection-start-column="73" selection-end-line="114" selection-end-column="73" />
+            <state vertical-scroll-proportion="-19.333334" vertical-offset="0" max-vertical-offset="720">
+              <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Image.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Image.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-15.333333" vertical-offset="414" max-vertical-offset="1206">
-              <caret line="46" column="40" selection-start-line="46" selection-start-column="40" selection-end-line="46" selection-end-column="40" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FunctionResizeTest.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/FunctionResizeTest.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.148149" vertical-offset="248" max-vertical-offset="1098">
-              <caret line="32" column="28" selection-start-line="32" selection-start-column="22" selection-end-line="32" selection-end-column="28" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ConfigurationTest.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/unit/ConfigurationTest.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.6666665" vertical-offset="108" max-vertical-offset="1728">
-              <caret line="16" column="42" selection-start-line="16" selection-start-column="27" selection-end-line="16" selection-end-column="42" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ImageTest.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/unit/ImageTest.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-20.0" vertical-offset="504" max-vertical-offset="1332">
-              <caret line="58" column="99" selection-start-line="58" selection-start-column="99" selection-end-line="58" selection-end-column="99" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ResizerTest.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/unit/ResizerTest.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.4814816" vertical-offset="572" max-vertical-offset="1710">
-              <caret line="43" column="44" selection-start-line="43" selection-start-column="44" selection-end-line="43" selection-end-column="44" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Resizer.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Resizer.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Resizer.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-15.0" vertical-offset="981" max-vertical-offset="1656">
-              <caret line="77" column="0" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.81104654" vertical-offset="0" max-vertical-offset="1728">
+              <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Configuration.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Configuration.php">
+      <file leaf-file-name="CommandComposer.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CommandComposer.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-16.0" vertical-offset="324" max-vertical-offset="1584">
-              <caret line="42" column="40" selection-start-line="42" selection-start-column="39" selection-end-line="42" selection-end-column="41" />
+            <state vertical-scroll-proportion="-42.0" vertical-offset="0" max-vertical-offset="2412">
+              <caret line="63" column="63" selection-start-line="63" selection-start-column="63" selection-end-line="63" selection-end-column="63" />
               <folding />
             </state>
           </provider>
@@ -113,19 +63,28 @@
         <option value="$PROJECT_DIR$/Options.php" />
         <option value="$PROJECT_DIR$/Resize.php" />
         <option value="$PROJECT_DIR$/test/ResizeTest.php" />
-        <option value="$PROJECT_DIR$/FileSystem.php" />
         <option value="$PROJECT_DIR$/ImagePath.php" />
         <option value="$PROJECT_DIR$/test/ConfigurationTest.php" />
         <option value="$PROJECT_DIR$/test/ResizerTest.php" />
         <option value="$PROJECT_DIR$/test/ImagePathTest.php" />
-        <option value="$PROJECT_DIR$/Configuration.php" />
-        <option value="$PROJECT_DIR$/test/unit/ConfigurationTest.php" />
-        <option value="$PROJECT_DIR$/test/FunctionResizeTest.php" />
+        <option value="$PROJECT_DIR$/FileSystem.php" />
+        <option value="$PROJECT_DIR$/test/ImageIntegrationTest" />
+        <option value="$PROJECT_DIR$/test/ImageIntegrationTest.php" />
         <option value="$PROJECT_DIR$/test/unit/ImageTest.php" />
-        <option value="$PROJECT_DIR$/Image.php" />
-        <option value="$PROJECT_DIR$/function.resize.php" />
+        <option value="$PROJECT_DIR$/CommandBuilder.php" />
+        <option value="$PROJECT_DIR$/test/unit/CommandBuilderTest.php" />
+        <option value="$PROJECT_DIR$/CommandComposer.php" />
+        <option value="$PROJECT_DIR$/test/unit/PathComposer.php" />
+        <option value="$PROJECT_DIR$/test/unit/ConfigurationTest.php" />
+        <option value="$PROJECT_DIR$/Configuration.php" />
+        <option value="$PROJECT_DIR$/test/unit/PathComposerTest.php" />
         <option value="$PROJECT_DIR$/test/unit/ResizerTest.php" />
+        <option value="$PROJECT_DIR$/Image.php" />
+        <option value="$PROJECT_DIR$/test/FunctionResizeTest.php" />
+        <option value="$PROJECT_DIR$/test/unit/CommandComposerTest.php" />
+        <option value="$PROJECT_DIR$/PathComposer.php" />
         <option value="$PROJECT_DIR$/Resizer.php" />
+        <option value="$PROJECT_DIR$/function.resize.php" />
       </list>
     </option>
   </component>
@@ -178,6 +137,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -230,7 +190,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -270,6 +229,9 @@
       <BehatRunner />
       <method />
     </configuration>
+    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
+      <method />
+    </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
       <node-options />
       <gulpfile />
@@ -277,9 +239,6 @@
       <arguments />
       <pass-parent-envs>true</pass-parent-envs>
       <envs />
-      <method />
-    </configuration>
-    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
       <method />
     </configuration>
     <list size="1">
@@ -315,7 +274,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21279655" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18475917" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32885906" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -324,9 +283,9 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -346,10 +305,107 @@
     </option>
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="5" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/test/unit/ImageTest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="657" max-vertical-offset="1332">
+          <caret line="58" column="99" selection-start-line="58" selection-start-column="99" selection-end-line="58" selection-end-column="99" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/unit/ResizerTest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="320" max-vertical-offset="1710">
+          <caret line="43" column="44" selection-start-line="43" selection-start-column="44" selection-end-line="43" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Resizer.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1656">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Configuration.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="324" max-vertical-offset="1584">
+          <caret line="42" column="40" selection-start-line="42" selection-start-column="39" selection-end-line="42" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/function.resize.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2052" max-vertical-offset="2664">
+          <caret line="114" column="73" selection-start-line="114" selection-start-column="73" selection-end-line="114" selection-end-column="73" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Image.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="306" max-vertical-offset="1206">
+          <caret line="46" column="40" selection-start-line="46" selection-start-column="40" selection-end-line="46" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/FunctionResizeTest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="248" max-vertical-offset="1098">
+          <caret line="32" column="28" selection-start-line="32" selection-start-column="22" selection-end-line="32" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/unit/ConfigurationTest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="108" max-vertical-offset="1728">
+          <caret line="16" column="42" selection-start-line="16" selection-start-column="27" selection-end-line="16" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/unit/ImageTest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="657" max-vertical-offset="1332">
+          <caret line="58" column="99" selection-start-line="58" selection-start-column="99" selection-end-line="58" selection-end-column="99" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/unit/ResizerTest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="320" max-vertical-offset="1710">
+          <caret line="43" column="44" selection-start-line="43" selection-start-column="44" selection-end-line="43" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Resizer.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1656">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Configuration.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="324" max-vertical-offset="1584">
+          <caret line="42" column="40" selection-start-line="42" selection-start-column="39" selection-end-line="42" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/function.resize.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2270" max-vertical-offset="3240">
@@ -394,7 +450,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="526" max-vertical-offset="1710">
           <caret line="44" column="35" selection-start-line="44" selection-start-column="32" selection-end-line="44" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -410,7 +465,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="72" max-vertical-offset="468">
           <caret line="4" column="31" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -535,17 +589,9 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/FileSystem.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.10465116" vertical-offset="0" max-vertical-offset="688">
-          <caret line="4" column="31" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/example.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6340741" vertical-offset="1012" max-vertical-offset="1710">
+        <state vertical-scroll-proportion="2.1333334" vertical-offset="0" max-vertical-offset="1710">
           <caret line="80" column="36" selection-start-line="79" selection-start-column="8" selection-end-line="81" selection-end-column="9" />
           <folding />
         </state>
@@ -553,64 +599,112 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Configuration.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-16.0" vertical-offset="324" max-vertical-offset="1584">
-          <caret line="42" column="40" selection-start-line="42" selection-start-column="39" selection-end-line="42" selection-end-column="41" />
+        <state vertical-scroll-proportion="-14.0" vertical-offset="0" max-vertical-offset="2034">
+          <caret line="21" column="18" selection-start-line="21" selection-start-column="17" selection-end-line="21" selection-end-column="18" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/unit/ConfigurationTest.php">
+    <entry file="file://$PROJECT_DIR$/FileSystem.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.6666665" vertical-offset="108" max-vertical-offset="1728">
-          <caret line="16" column="42" selection-start-line="16" selection-start-column="27" selection-end-line="16" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/unit/ImageTest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-20.0" vertical-offset="504" max-vertical-offset="1332">
-          <caret line="58" column="99" selection-start-line="58" selection-start-column="99" selection-end-line="58" selection-end-column="99" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/FunctionResizeTest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.148149" vertical-offset="248" max-vertical-offset="1098">
-          <caret line="32" column="28" selection-start-line="32" selection-start-column="22" selection-end-line="32" selection-end-column="28" />
+        <state vertical-scroll-proportion="-14.666667" vertical-offset="0" max-vertical-offset="540">
+          <caret line="22" column="5" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Image.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.333333" vertical-offset="414" max-vertical-offset="1206">
-          <caret line="46" column="40" selection-start-line="46" selection-start-column="40" selection-end-line="46" selection-end-column="40" />
+        <state vertical-scroll-proportion="-52.0" vertical-offset="0" max-vertical-offset="2340">
+          <caret line="78" column="28" selection-start-line="78" selection-start-column="20" selection-end-line="78" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/ImageIntegrationTest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.36627907" vertical-offset="0" max-vertical-offset="688">
+          <caret line="14" column="50" selection-start-line="14" selection-start-column="50" selection-end-line="14" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/FunctionResizeTest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.02616279" vertical-offset="0" max-vertical-offset="1098">
+          <caret line="1" column="12" selection-start-line="1" selection-start-column="12" selection-end-line="1" selection-end-column="12" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test/unit/ResizerTest.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.4814816" vertical-offset="572" max-vertical-offset="1710">
-          <caret line="43" column="44" selection-start-line="43" selection-start-column="44" selection-end-line="43" selection-end-column="44" />
+        <state vertical-scroll-proportion="-2.6666667" vertical-offset="0" max-vertical-offset="3078">
+          <caret line="4" column="33" selection-start-line="4" selection-start-column="33" selection-end-line="4" selection-end-column="33" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Resizer.php">
+    <entry file="file://$PROJECT_DIR$/test/unit/ImageTest.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.0" vertical-offset="981" max-vertical-offset="1656">
-          <caret line="77" column="0" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
+        <state vertical-scroll-proportion="4.02907" vertical-offset="0" max-vertical-offset="3024">
+          <caret line="154" column="0" selection-start-line="154" selection-start-column="0" selection-end-line="154" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/unit/ConfigurationTest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="3.139535" vertical-offset="0" max-vertical-offset="2358">
+          <caret line="120" column="71" selection-start-line="120" selection-start-column="51" selection-end-line="120" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/unit/CommandComposerTest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.3333334" vertical-offset="0" max-vertical-offset="1314">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="3" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/unit/PathComposerTest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2616279" vertical-offset="0" max-vertical-offset="1584">
+          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PathComposer.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.05232558" vertical-offset="0" max-vertical-offset="1530">
+          <caret line="2" column="18" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CommandComposer.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-42.0" vertical-offset="0" max-vertical-offset="2412">
+          <caret line="63" column="63" selection-start-line="63" selection-start-column="63" selection-end-line="63" selection-end-column="63" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/function.resize.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.9825583" vertical-offset="0" max-vertical-offset="2664">
-          <caret line="114" column="73" selection-start-line="114" selection-start-column="73" selection-end-line="114" selection-end-column="73" />
+        <state vertical-scroll-proportion="-19.333334" vertical-offset="0" max-vertical-offset="720">
+          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Resizer.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.81104654" vertical-offset="0" max-vertical-offset="1728">
+          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
           <folding />
         </state>
       </provider>
